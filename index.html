@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>MedBill Pro | Medical Billing & RCM Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#0055B8;--blue-dark:#003d87;--blue-light:#e8f0fc;
+  --teal:#00A99D;--teal-light:#e6f7f6;
+  --orange:#F47B20;--orange-light:#fef2e8;
+  --gray:#64748b;--gray-light:#f8fafc;--gray-border:#e2e8f0;
+  --dark:#0f172a;--white:#fff;
+  --shadow:0 4px 24px rgba(0,85,184,.10);
+  --shadow-lg:0 12px 48px rgba(0,85,184,.15);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--dark);background:#fff;font-size:16px;line-height:1.6}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{max-width:100%}
+
+/* ─── TOPBAR ─── */
+.topbar{background:var(--blue-dark);color:#fff;font-size:.78rem;padding:.45rem 0}
+.topbar .tb-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.topbar a{color:#a8c8ff;margin-left:1rem}
+.topbar a:hover{color:#fff}
+
+/* ─── NAVBAR ─── */
+nav{background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08);position:sticky;top:0;z-index:999}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:'Poppins',sans-serif;font-size:1.45rem;font-weight:800;color:var(--blue)}
+.logo span{color:var(--teal)}
+.nav-links{display:flex;align-items:center;gap:.25rem}
+.nav-links>li{position:relative}
+.nav-links>li>a{padding:.5rem .85rem;font-size:.88rem;font-weight:500;color:var(--dark);border-radius:4px;display:flex;align-items:center;gap:.3rem;transition:all .2s}
+.nav-links>li>a:hover,.nav-links>li>a.active{color:var(--blue);background:var(--blue-light)}
+.nav-links>li>a .arr{font-size:.65rem;transition:transform .2s}
+.nav-links>li:hover>a .arr{transform:rotate(180deg)}
+.dropdown{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--gray-border);border-radius:8px;box-shadow:var(--shadow-lg);padding:.5rem;min-width:220px;opacity:0;visibility:hidden;transform:translateY(8px);transition:all .2s;z-index:100}
+.nav-links>li:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.dropdown a{display:block;padding:.55rem 1rem;font-size:.84rem;color:var(--gray);border-radius:4px;transition:all .15s}
+.dropdown a:hover{background:var(--blue-light);color:var(--blue)}
+.nav-cta{background:var(--blue);color:#fff!important;border-radius:6px;padding:.55rem 1.2rem!important;font-weight:600!important}
+.nav-cta:hover{background:var(--blue-dark)!important;color:#fff!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.5rem}
+.hamburger span{display:block;width:24px;height:2px;background:var(--dark);transition:.3s}
+
+/* ─── PAGES ─── */
+.page{display:none}
+.page.active{display:block}
+
+/* ─── HERO ─── */
+.hero{background:linear-gradient(135deg,#001f5b 0%,#003d87 50%,#005ec7 100%);color:#fff;padding:5rem 0 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:2rem;padding:.4rem 1rem;font-size:.75rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.4rem}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Poppins',sans-serif;font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:800;line-height:1.15;margin-bottom:1.2rem}
+.hero h1 em{font-style:normal;color:#60affe}
+.hero p{font-size:1.05rem;color:rgba(255,255,255,.8);line-height:1.8;margin-bottom:2rem;max-width:500px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.8rem;border-radius:6px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .25s;border:none;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 4px 16px rgba(244,123,32,.4)}
+.btn-primary:hover{background:#d96b10;transform:translateY(-2px);box-shadow:0 8px 24px rgba(244,123,32,.5)}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.4)}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:#fff}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--blue-dark);transform:translateY(-2px)}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
+.hero-stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:1rem;text-align:center}
+.hero-stat strong{display:block;font-family:'Poppins',sans-serif;font-size:1.6rem;font-weight:800;color:#60affe}
+.hero-stat span{font-size:.75rem;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.05em}
+.hero-visual{display:flex;flex-direction:column;gap:1rem}
+.hero-card{background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:1.4rem}
+.hero-card h4{font-size:.9rem;font-weight:600;margin-bottom:.5rem;color:#fff}
+.hero-card p{font-size:.8rem;color:rgba(255,255,255,.7);line-height:1.6}
+.hc-icon{font-size:1.5rem;margin-bottom:.5rem}
+.hero-card-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* ─── TRUST BAR ─── */
+.trust-bar{background:var(--gray-light);border-bottom:1px solid var(--gray-border);padding:1.2rem 0}
+.trust-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:1rem}
+.trust-item{display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:500;color:var(--gray)}
+.trust-icon{width:32px;height:32px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;flex-shrink:0}
+
+/* ─── SECTION STYLES ─── */
+.section{padding:5rem 0}
+.section-alt{background:var(--gray-light)}
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.section-head{text-align:center;margin-bottom:3.5rem}
+.section-label{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:.7rem;display:block}
+.section-head h2{font-family:'Poppins',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;color:var(--dark);margin-bottom:1rem}
+.section-head p{color:var(--gray);max-width:600px;margin:0 auto;font-size:1rem}
+
+/* ─── SERVICES GRID ─── */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+.service-card{background:#fff;border:1px solid var(--gray-border);border-radius:12px;padding:1.8rem;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--teal));transform:scaleX(0);transform-origin:left;transition:.3s}
+.service-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent}
+.service-card:hover::before{transform:scaleX(1)}
+.svc-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem}
+.svc-icon.blue{background:var(--blue-light);color:var(--blue)}
+.svc-icon.teal{background:var(--teal-light);color:var(--teal)}
+.svc-icon.orange{background:var(--orange-light);color:var(--orange)}
+.service-card h3{font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.6rem;color:var(--dark)}
+.service-card p{font-size:.87rem;color:var(--gray);line-height:1.7}
+.service-card .learn-more{margin-top:1rem;font-size:.82rem;font-weight:600;color:var(--blue);display:inline-flex;align-items:center;gap:.3rem}
+
+/* ─── PROCESS ─── */
+.process-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0;position:relative}
+.process-steps::before{content:'';position:absolute;top:40px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--blue),var(--teal));z-index:0}
+.process-step{text-align:center;padding:1.5rem 1rem;position:relative;z-index:1}
+.step-num{width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:0 4px 16px rgba(0,85,184,.3)}
+.process-step h4{font-size:.9rem;font-weight:700;margin-bottom:.4rem;color:var(--dark)}
+.process-step p{font-size:.8rem;color:var(--gray)}
+
+/* ─── STATS ─── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2rem}
+.stat-card{text-align:center;padding:2rem}
+.stat-num{font-family:'Poppins',sans-serif;font-size:2.8rem;font-weight:800;color:var(--blue);display:block;line-height:1}
+.stat-label{font-size:.85rem;color:var(--gray);margin-top:.4rem;display:block}
+
+/* ─── SPECIALTIES ─── */
+.specialties-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem}
+.specialty-pill{background:#fff;border:1px solid var(--gray-border);border-radius:8px;padding:.9rem 1rem;text-align:center;font-size:.82rem;font-weight:500;color:var(--dark);transition:all .2s;cursor:pointer}
+.specialty-pill:hover{background:var(--blue);color:#fff;border-color:var(--blue);transform:translateY(-2px)}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.testi-card{background:#fff;border:1px solid var(--gray-border);border-radius:12px;padding:1.8rem}
+.testi-stars{color:#f59e0b;font-size:1rem;margin-bottom:.8rem}
+.testi-text{font-size:.9rem;color:var(--gray);line-height:1.8;margin-bottom:1.2rem;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.testi-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.9rem;flex-shrink:0}
+.testi-name{font-weight:600;font-size:.88rem}
+.testi-role{font-size:.78rem;color:var(--gray)}
+
+/* ─── CTA BAND ─── */
+.cta-band{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:4rem 0;text-align:center}
+.cta-band h2{font-family:'Poppins',sans-serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;margin-bottom:1rem}
+.cta-band p{color:rgba(255,255,255,.8);max-width:550px;margin:0 auto 2rem;font-size:1rem}
+.cta-band .btn-primary{font-size:1rem;padding:1rem 2.2rem}
+
+/* ─── ABOUT PAGE ─── */
+.about-hero{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:4rem 0;text-align:center}
+.about-hero h1{font-family:'Poppins',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:1rem}
+.about-hero p{color:rgba(255,255,255,.8);max-width:600px;margin:0 auto}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-img-placeholder{background:linear-gradient(135deg,var(--blue-light),var(--teal-light));border-radius:16px;padding:3rem;text-align:center;min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--gray-border)}
+.about-img-placeholder .big-icon{font-size:5rem;margin-bottom:1.5rem}
+.about-content h2{font-family:'Poppins',sans-serif;font-size:1.9rem;font-weight:800;color:var(--dark);margin-bottom:1rem}
+.about-content p{color:var(--gray);line-height:1.8;margin-bottom:1rem;font-size:.95rem}
+.values-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.value-card{background:#fff;border:1px solid var(--gray-border);border-radius:10px;padding:1.4rem}
+.value-card h4{font-weight:700;margin-bottom:.4rem;font-size:.95rem;color:var(--dark)}
+.value-card p{font-size:.82rem;color:var(--gray)}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem}
+.team-card{background:#fff;border:1px solid var(--gray-border);border-radius:12px;padding:1.8rem;text-align:center}
+.team-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:700;margin:0 auto 1rem}
+.team-card h4{font-weight:700;margin-bottom:.2rem}
+.team-card span{font-size:.82rem;color:var(--gray)}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem}
+.why-card{background:#fff;border-left:4px solid var(--blue);border-radius:0 10px 10px 0;padding:1.4rem;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.why-card h4{font-weight:700;margin-bottom:.5rem;color:var(--dark)}
+.why-card p{font-size:.85rem;color:var(--gray)}
+
+/* ─── CONTACT PAGE ─── */
+.contact-hero{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:4rem 0;text-align:center}
+.contact-hero h1{font-family:'Poppins',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:1rem}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;align-items:start}
+.contact-info-card{background:#fff;border:1px solid var(--gray-border);border-radius:12px;padding:2rem}
+.contact-info-card h3{font-family:'Poppins',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;color:var(--dark)}
+.cinfo-item{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start}
+.cinfo-icon{width:44px;height:44px;border-radius:10px;background:var(--blue-light);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.cinfo-text strong{display:block;font-size:.88rem;font-weight:600;color:var(--dark);margin-bottom:.2rem}
+.cinfo-text span{font-size:.83rem;color:var(--gray)}
+.form-card{background:#fff;border:1px solid var(--gray-border);border-radius:12px;padding:2.5rem}
+.form-card h3{font-family:'Poppins',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:.5rem}
+.form-card>p{font-size:.87rem;color:var(--gray);margin-bottom:1.8rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{margin-bottom:1.2rem}
+.form-group label{display:block;font-size:.84rem;font-weight:600;color:var(--dark);margin-bottom:.4rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.75rem 1rem;border:1px solid var(--gray-border);border-radius:6px;font-size:.9rem;font-family:'Inter',sans-serif;color:var(--dark);transition:border .2s;background:#fff}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,85,184,.1)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-submit{width:100%;padding:1rem;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:1rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .25s}
+.form-submit:hover{background:var(--blue-dark);transform:translateY(-1px)}
+.form-note{font-size:.76rem;color:var(--gray);text-align:center;margin-top:.8rem}
+.success-msg{display:none;background:#e8f7f0;border:1px solid #86efac;border-radius:8px;padding:1.2rem;text-align:center;color:#166534;font-weight:600;margin-top:1rem}
+
+/* ─── SERVICES PAGE ─── */
+.services-hero{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:4rem 0;text-align:center}
+.services-hero h1{font-family:'Poppins',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:1rem}
+.big-services{display:grid;grid-template-columns:1fr;gap:2rem}
+.big-service{background:#fff;border:1px solid var(--gray-border);border-radius:12px;padding:2rem;display:grid;grid-template-columns:80px 1fr;gap:1.5rem;align-items:start;transition:.3s}
+.big-service:hover{box-shadow:var(--shadow-lg);border-color:var(--blue)}
+.bs-icon{width:70px;height:70px;border-radius:14px;background:var(--blue-light);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:2rem}
+.big-service h3{font-family:'Poppins',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.big-service p{color:var(--gray);font-size:.9rem;line-height:1.7;margin-bottom:.8rem}
+.tag-list{display:flex;flex-wrap:wrap;gap:.5rem}
+.tag{font-size:.72rem;background:var(--blue-light);color:var(--blue);padding:.25rem .7rem;border-radius:2rem;font-weight:500}
+
+/* ─── PRICING PAGE ─── */
+.pricing-hero{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:4rem 0;text-align:center}
+.pricing-hero h1{font-family:'Poppins',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:1rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}
+.pricing-card{background:#fff;border:2px solid var(--gray-border);border-radius:16px;padding:2.5rem;text-align:center;transition:.3s;position:relative}
+.pricing-card.popular{border-color:var(--blue);transform:scale(1.02)}
+.popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:.72rem;font-weight:700;padding:.3rem 1rem;border-radius:2rem;letter-spacing:.08em;text-transform:uppercase}
+.pricing-card h3{font-family:'Poppins',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.4rem}
+.pricing-card .price{font-family:'Poppins',sans-serif;font-size:2.8rem;font-weight:800;color:var(--blue);margin:1.2rem 0 .4rem}
+.pricing-card .price span{font-size:1rem;font-weight:400;color:var(--gray)}
+.pricing-card .price-note{font-size:.82rem;color:var(--gray);margin-bottom:1.5rem}
+.pricing-card ul{text-align:left;margin-bottom:2rem}
+.pricing-card ul li{font-size:.87rem;padding:.5rem 0;border-bottom:1px solid var(--gray-border);display:flex;align-items:center;gap:.6rem;color:var(--gray)}
+.pricing-card ul li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
+.pricing-card .btn{width:100%;justify-content:center}
+
+/* ─── FOOTER ─── */
+footer{background:#0f172a;color:#94a3b8;padding:3.5rem 0 1.5rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+.footer-brand .logo{color:#fff;font-size:1.3rem;display:block;margin-bottom:.8rem}
+.footer-brand p{font-size:.83rem;line-height:1.7;max-width:280px}
+.footer-col h4{color:#fff;font-size:.9rem;font-weight:600;margin-bottom:1rem;letter-spacing:.03em}
+.footer-col li{margin-bottom:.5rem}
+.footer-col a{font-size:.83rem;color:#94a3b8;transition:color .2s}
+.footer-col a:hover{color:#60affe}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;font-size:.78rem}
+.footer-bottom a{color:#64748b}
+.footer-bottom a:hover{color:#60affe}
+.footer-badges{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.2rem}
+.fbadge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:4px;padding:.35rem .8rem;font-size:.73rem;color:#94a3b8}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .big-service{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:#fff;box-shadow:var(--shadow);padding:1rem}
+  .hamburger{display:flex}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .trust-inner{flex-direction:column;text-align:center}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .values-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-inner">
+    <span>📞 Sales: <strong>+1 (800) 123-4567</strong> &nbsp;|&nbsp; 📧 info@medbillpro.com</span>
+    <span>
+      <a href="#" onclick="showPage('portal')">Practice Login</a>
+      <a href="#" onclick="showPage('portal')">Patient Portal</a>
+    </span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')" style="cursor:pointer">MedBill<span>Pro</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" onclick="showPage('home')">Home</a></li>
+      <li>
+        <a href="#">Services <span class="arr">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="#" onclick="showPage('services')">Medical Billing & Coding</a></li>
+          <li><a href="#" onclick="showPage('services')">Revenue Cycle Management</a></li>
+          <li><a href="#" onclick="showPage('services')">Credentialing Services</a></li>
+          <li><a href="#" onclick="showPage('services')">Patient Eligibility Verification</a></li>
+          <li><a href="#" onclick="showPage('services')">AR Management</a></li>
+          <li><a href="#" onclick="showPage('services')">Medical Coding Audit</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Specialties <span class="arr">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="#" onclick="showPage('specialties')">Cardiology</a></li>
+          <li><a href="#" onclick="showPage('specialties')">Orthopedics</a></li>
+          <li><a href="#" onclick="showPage('specialties')">Primary Care</a></li>
+          <li><a href="#" onclick="showPage('specialties')">OB/GYN</a></li>
+          <li><a href="#" onclick="showPage('specialties')">Neurology</a></li>
+          <li><a href="#" onclick="showPage('specialties')">View All Specialties →</a></li>
+        </ul>
+      </li>
+      <li><a href="#" onclick="showPage('about')">About Us</a></li>
+      <li><a href="#" onclick="showPage('pricing')">Pricing</a></li>
+      <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+      <li><a href="#" class="btn nav-cta" onclick="showPage('contact')">Free Consultation</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HOME PAGE ═══════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge"><span class="hero-badge-dot"></span> HIPAA-Compliant & Certified</div>
+        <h1>Top-Rated <em>Medical Billing</em> & RCM Services in the USA</h1>
+        <p>Reduce claim denials, speed up reimbursements, and maximize your practice revenue with MedBillPro's expert billing team. Serving 40+ medical specialties nationwide.</p>
+        <div class="hero-btns">
+          <button class="btn btn-primary" onclick="showPage('contact')">Get Free Consultation</button>
+          <button class="btn btn-outline" onclick="showPage('services')">Explore Services</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>98%</strong><span>Clean Claim Rate</span></div>
+          <div class="hero-stat"><strong>40+</strong><span>Specialties</span></div>
+          <div class="hero-stat"><strong>500+</strong><span>Physicians</span></div>
+          <div class="hero-stat"><strong>24/7</strong><span>Support</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hc-icon">💰</div>
+          <h4>Revenue Cycle Optimization</h4>
+          <p>End-to-end RCM solutions to boost collections and reduce A/R days to under 25.</p>
+        </div>
+        <div class="hero-card-row">
+          <div class="hero-card">
+            <div class="hc-icon">⚡</div>
+            <h4>Fast Claim Turnaround</h4>
+            <p>Claims submitted within 24 hours of patient encounter.</p>
+          </div>
+          <div class="hero-card">
+            <div class="hc-icon">🔒</div>
+            <h4>HIPAA Secure</h4>
+            <p>Full HIPAA compliance with ISO 27001 certified data security.</p>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-icon">📊</div>
+          <h4>Real-Time Reporting Dashboard</h4>
+          <p>Track claim status, collections, and A/R aging with detailed daily, weekly & monthly reports.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <div class="trust-item"><div class="trust-icon">✔</div> HIPAA-Compliant</div>
+      <div class="trust-item"><div class="trust-icon">🏆</div> 98% Clean Claim Rate</div>
+      <div class="trust-item"><div class="trust-icon">👨‍⚕️</div> Certified Coders</div>
+      <div class="trust-item"><div class="trust-icon">🕐</div> 24/7 Dedicated Support</div>
+      <div class="trust-item"><div class="trust-icon">📋</div> No Long-Term Contracts</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">What We Offer</span>
+        <h2>Comprehensive Medical Billing Services</h2>
+        <p>We handle every aspect of your revenue cycle so you can focus entirely on delivering exceptional patient care.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" onclick="showPage('services')">
+          <div class="svc-icon blue">🏥</div>
+          <h3>Medical Billing & Coding</h3>
+          <p>Accurate ICD-10, CPT, and HCPCS coding by certified specialists to maximize reimbursements and minimize denials.</p>
+          <span class="learn-more">Learn More →</span>
+        </div>
+        <div class="service-card" onclick="showPage('services')">
+          <div class="svc-icon teal">🔄</div>
+          <h3>Revenue Cycle Management</h3>
+          <p>Comprehensive RCM from patient intake to final payment posting — optimized for your specialty and payer mix.</p>
+          <span class="learn-more">Learn More →</span>
+        </div>
+        <div class="service-card" onclick="showPage('services')">
+          <div class="svc-icon orange">📋</div>
+          <h3>Credentialing Services</h3>
+          <p>Streamlined provider credentialing and re-credentialing with all major commercial and government payers.</p>
+          <span class="learn-more">Learn More →</span>
+        </div>
+        <div class="service-card" onclick="showPage('services')">
+          <div class="svc-icon blue">✅</div>
+          <h3>Patient Eligibility Verification</h3>
+          <p>Real-time insurance verification before appointments to reduce claim rejections and patient billing disputes.</p>
+          <span class="learn-more">Learn More →</span>
+        </div>
+        <div class="service-card" onclick="showPage('services')">
+          <div class="svc-icon teal">📈</div>
+          <h3>Accounts Receivable Management</h3>
+          <p>Aggressive A/R follow-up and denial management to recover outstanding balances and improve cash flow.</p>
+          <span class="learn-more">Learn More →</span>
+        </div>
+        <div class="service-card" onclick="showPage('services')">
+          <div class="svc-icon orange">🔍</div>
+          <h3>Medical Billing Audit</h3>
+          <p>Thorough audit of your current billing processes to identify revenue leakage, compliance gaps, and improvement areas.</p>
+          <span class="learn-more">Learn More →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">How It Works</span>
+        <h2>Our Proven 6-Step Billing Process</h2>
+        <p>A transparent, streamlined workflow designed to get your claims paid faster with fewer rejections.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step"><div class="step-num">1</div><h4>Practice Assessment</h4><p>We evaluate your workflows, specialty, and payer mix.</p></div>
+        <div class="process-step"><div class="step-num">2</div><h4>Patient Verification</h4><p>Insurance eligibility confirmed before every visit.</p></div>
+        <div class="process-step"><div class="step-num">3</div><h4>Accurate Coding</h4><p>Certified coders assign CPT, ICD & HCPCS codes.</p></div>
+        <div class="process-step"><div class="step-num">4</div><h4>Claim Submission</h4><p>Clean claims submitted electronically within 24 hrs.</p></div>
+        <div class="process-step"><div class="step-num">5</div><h4>Payment Posting</h4><p>Accurate ERA/EOB posting to patient accounts.</p></div>
+        <div class="process-step"><div class="step-num">6</div><h4>Reporting & Follow-up</h4><p>Detailed performance reports and A/R follow-up.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section" style="background:linear-gradient(135deg,#001f5b,#003d87);color:#fff">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label" style="color:#60affe">Our Success in Numbers</span>
+        <h2 style="color:#fff">Trusted by Hundreds of Healthcare Providers</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-num" style="color:#60affe">$50M+</span><span class="stat-label" style="color:rgba(255,255,255,.7)">Claims Processed Annually</span></div>
+        <div class="stat-card"><span class="stat-num" style="color:#60affe">98%</span><span class="stat-label" style="color:rgba(255,255,255,.7)">First Pass Clean Claim Rate</span></div>
+        <div class="stat-card"><span class="stat-num" style="color:#60affe">&lt;25</span><span class="stat-label" style="color:rgba(255,255,255,.7)">A/R Days Average</span></div>
+        <div class="stat-card"><span class="stat-num" style="color:#60affe">30%</span><span class="stat-label" style="color:rgba(255,255,255,.7)">Average Revenue Increase</span></div>
+        <div class="stat-card"><span class="stat-num" style="color:#60affe">500+</span><span class="stat-label" style="color:rgba(255,255,255,.7)">Physicians Served</span></div>
+        <div class="stat-card"><span class="stat-num" style="color:#60affe">97%</span><span class="stat-label" style="color:rgba(255,255,255,.7)">Client Retention Rate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIALTIES -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Medical Specialties</span>
+        <h2>We Serve 40+ Medical Specialties</h2>
+        <p>Our certified billers understand the unique coding requirements, payer rules, and compliance needs of your specialty.</p>
+      </div>
+      <div class="specialties-grid">
+        <div class="specialty-pill" onclick="showPage('specialties')">🫀 Cardiology</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🦴 Orthopedics</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🧠 Neurology</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">👶 Pediatrics</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🩺 Primary Care</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🔬 Oncology</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🫁 Pulmonology</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">💊 Pain Management</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🩻 Radiology</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🧬 Nephrology</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">👁 Ophthalmology</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🦷 Dental</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🧪 Laboratory</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🏥 OB/GYN</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">🧘 Psychiatry</div>
+        <div class="specialty-pill" onclick="showPage('specialties')">➕ View All</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Client Testimonials</span>
+        <h2>What Our Clients Say</h2>
+        <p>Hundreds of providers across the U.S. trust MedBillPro to manage their billing and revenue cycle.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"After switching to MedBillPro, our denial rate dropped by over 40% within the first three months. Their team is incredibly knowledgeable and responsive. Best billing decision we ever made."</p>
+          <div class="testi-author"><div class="testi-avatar">DR</div><div><div class="testi-name">Dr. Richard Monroe</div><div class="testi-role">Cardiology Practice, Texas</div></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"The transition from our in-house billing team was seamless. MedBillPro handled everything, and our collections improved by 28% in just six months. Their reporting dashboard keeps us informed at all times."</p>
+          <div class="testi-author"><div class="testi-avatar">SL</div><div><div class="testi-name">Sarah L., Office Manager</div><div class="testi-role">Multi-Specialty Group, Florida</div></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"As a small orthopedic practice, we were overwhelmed with billing complexities. MedBillPro simplified everything. We finally have visibility into our revenue cycle and our A/R is down to under 20 days."</p>
+          <div class="testi-author"><div class="testi-avatar">JW</div><div><div class="testi-name">Dr. James Williams</div><div class="testi-role">Orthopedics, California</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div class="container">
+      <h2>Ready to Increase Your Practice Revenue?</h2>
+      <p>Join 500+ providers who've simplified billing and boosted collections with MedBillPro. Get a free billing audit and consultation today.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Schedule Free Consultation →</button>
+    </div>
+  </div>
+
+</div><!-- end home -->
+
+<!-- ═══════════════════ SERVICES PAGE ═══════════════════ -->
+<div id="page-services" class="page">
+  <div class="services-hero">
+    <div class="container">
+      <h1>Our Medical Billing Services</h1>
+      <p>End-to-end revenue cycle solutions tailored to your specialty, practice size, and payer requirements.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="big-services">
+        <div class="big-service">
+          <div class="bs-icon">🏥</div>
+          <div>
+            <h3>Medical Billing & Coding Services</h3>
+            <p>Our certified billers and coders deliver accurate ICD-10, CPT, and HCPCS coding to reduce denials and maximize reimbursements. We stay updated with the latest CMS guidelines, LCD policies, and payer-specific rules to ensure clean claim submission every time.</p>
+            <div class="tag-list"><span class="tag">ICD-10 Coding</span><span class="tag">CPT Coding</span><span class="tag">HCPCS</span><span class="tag">Modifier Review</span><span class="tag">Claim Scrubbing</span></div>
+          </div>
+        </div>
+        <div class="big-service">
+          <div class="bs-icon">🔄</div>
+          <div>
+            <h3>Revenue Cycle Management (RCM)</h3>
+            <p>We manage the complete revenue cycle from patient registration to final payment — eligibility checks, prior authorizations, charge capture, claim submission, payment posting, and denial resolution. Our RCM solutions reduce A/R days and improve cash flow.</p>
+            <div class="tag-list"><span class="tag">Patient Registration</span><span class="tag">Prior Authorization</span><span class="tag">Charge Capture</span><span class="tag">Denial Management</span><span class="tag">Payment Posting</span></div>
+          </div>
+        </div>
+        <div class="big-service">
+          <div class="bs-icon">📋</div>
+          <div>
+            <h3>Provider Credentialing Services</h3>
+            <p>Get your providers enrolled with insurance networks quickly and accurately. We handle CAQH profiles, payer applications, re-credentialing, and hospital privileging — reducing delays so you start getting paid faster.</p>
+            <div class="tag-list"><span class="tag">CAQH Management</span><span class="tag">Payer Enrollment</span><span class="tag">Re-Credentialing</span><span class="tag">Hospital Privileges</span></div>
+          </div>
+        </div>
+        <div class="big-service">
+          <div class="bs-icon">✅</div>
+          <div>
+            <h3>Patient Eligibility Verification</h3>
+            <p>We verify patient insurance eligibility and benefits in real time before every appointment, eliminating claim rejections due to coverage issues and reducing patient billing disputes at the front desk.</p>
+            <div class="tag-list"><span class="tag">Real-Time Verification</span><span class="tag">Benefits Check</span><span class="tag">Co-pay Identification</span><span class="tag">Deductible Tracking</span></div>
+          </div>
+        </div>
+        <div class="big-service">
+          <div class="bs-icon">📈</div>
+          <div>
+            <h3>Accounts Receivable (A/R) Management</h3>
+            <p>Our dedicated A/R team follows up aggressively on unpaid claims, appeals denied claims with clinical documentation, and resolves complex payer disputes to recover every dollar owed to your practice.</p>
+            <div class="tag-list"><span class="tag">Denial Appeals</span><span class="tag">Payer Follow-Up</span><span class="tag">Aged A/R Recovery</span><span class="tag">Appeals Letters</span></div>
+          </div>
+        </div>
+        <div class="big-service">
+          <div class="bs-icon">🔍</div>
+          <div>
+            <h3>Medical Billing Audit Services</h3>
+            <p>We perform comprehensive billing audits to identify under-coding, over-coding, compliance gaps, and revenue leakage. Receive a detailed action plan to improve accuracy, compliance, and overall collections.</p>
+            <div class="tag-list"><span class="tag">Compliance Review</span><span class="tag">Revenue Leakage Analysis</span><span class="tag">Coding Accuracy</span><span class="tag">Payer Contract Review</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="cta-band">
+    <div class="container">
+      <h2>Not Sure Which Service You Need?</h2>
+      <p>Schedule a free consultation with our RCM experts. We'll assess your practice and recommend the right solution.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Get Free Assessment →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SPECIALTIES PAGE ═══════════════════ -->
+<div id="page-specialties" class="page">
+  <div class="services-hero">
+    <div class="container">
+      <h1>Medical Billing Specialties</h1>
+      <p>Specialty-specific billing expertise across 40+ medical and surgical disciplines — because one-size billing never fits all.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Our Expertise</span>
+        <h2>We Know Your Specialty's Billing Inside Out</h2>
+        <p>Each specialty comes with its own payer rules, coding nuances, and documentation requirements. Our certified billers are trained specifically in your field.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card"><div class="svc-icon blue">🫀</div><h3>Cardiology Billing</h3><p>Expert handling of cardiovascular procedure codes, echocardiography, catheterization, and EKG billing with payer-specific rules.</p></div>
+        <div class="service-card"><div class="svc-icon teal">🦴</div><h3>Orthopedics Billing</h3><p>Accurate coding for joint replacement, fracture care, sports medicine, and arthroscopic procedures with modifier expertise.</p></div>
+        <div class="service-card"><div class="svc-icon orange">🧠</div><h3>Neurology Billing</h3><p>Specialized billing for EEG, EMG/NCS studies, sleep medicine, and complex neurological evaluation and management services.</p></div>
+        <div class="service-card"><div class="svc-icon blue">👶</div><h3>Pediatrics Billing</h3><p>Comprehensive pediatric billing including well-child visits, vaccines, developmental screenings, and newborn care.</p></div>
+        <div class="service-card"><div class="svc-icon teal">🩺</div><h3>Primary Care Billing</h3><p>E&M coding optimization, chronic care management, annual wellness visits, and preventive care billing.</p></div>
+        <div class="service-card"><div class="svc-icon orange">🔬</div><h3>Oncology Billing</h3><p>Complex chemotherapy administration billing, drug coding, clinical trial billing, and oncology-specific payer rules.</p></div>
+        <div class="service-card"><div class="svc-icon blue">💊</div><h3>Pain Management Billing</h3><p>Interventional pain procedures, nerve blocks, spinal injections, and fluoroscopy guidance billing with proper modifiers.</p></div>
+        <div class="service-card"><div class="svc-icon teal">🏥</div><h3>OB/GYN Billing</h3><p>Global obstetric packages, gynecological procedures, ultrasound billing, and maternity care coding.</p></div>
+        <div class="service-card"><div class="svc-icon orange">🩻</div><h3>Radiology Billing</h3><p>Technical and professional component billing, teleradiology, CT/MRI, interventional radiology, and nuclear medicine.</p></div>
+        <div class="service-card"><div class="svc-icon blue">🧬</div><h3>Nephrology Billing</h3><p>Dialysis billing, ESRD monthly capitation, kidney care management, and transplant follow-up billing.</p></div>
+        <div class="service-card"><div class="svc-icon teal">🧘</div><h3>Psychiatry & Behavioral Health</h3><p>Psychotherapy, E&M with psychotherapy add-on, substance use disorder, and telehealth mental health billing.</p></div>
+        <div class="service-card"><div class="svc-icon orange">🦷</div><h3>Dental Billing</h3><p>Dental procedure coding, medical-dental cross coding, implant billing, and insurance claim management.</p></div>
+      </div>
+    </div>
+  </section>
+  <div class="cta-band">
+    <div class="container">
+      <h2>Don't See Your Specialty?</h2>
+      <p>We serve 40+ specialties. Contact us to discuss your specialty-specific billing needs with our experts.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Talk to a Billing Expert →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ ABOUT PAGE ═══════════════════ -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <div class="container">
+      <h1>About MedBillPro</h1>
+      <p>A dedicated medical billing company committed to helping healthcare providers achieve financial excellence through expert revenue cycle management.</p>
+    </div>
+  </div>
+
+  <!-- WHO WE ARE -->
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-placeholder">
+          <div class="big-icon">🏥</div>
+          <h3 style="color:var(--blue);font-family:Poppins,sans-serif;font-weight:800">MedBillPro</h3>
+          <p style="color:var(--gray);font-size:.9rem;margin-top:.5rem">Your Revenue Cycle Partner</p>
+          <div style="display:flex;gap:.5rem;margin-top:1.5rem;flex-wrap:wrap;justify-content:center">
+            <div class="fbadge" style="background:var(--blue);color:#fff;border:none">HIPAA Certified</div>
+            <div class="fbadge" style="background:var(--teal);color:#fff;border:none">ISO 27001</div>
+            <div class="fbadge" style="background:var(--orange);color:#fff;border:none">AAPC Certified</div>
+          </div>
+        </div>
+        <div class="about-content">
+          <span class="section-label">Who We Are</span>
+          <h2>A Trusted Medical Billing Partner Since 2008</h2>
+          <p>MedBillPro was founded with a single mission: to empower healthcare providers to focus on patient care while we handle the complexities of medical billing and revenue cycle management.</p>
+          <p>Over the past 15+ years, we have grown into a full-service revenue cycle company serving 500+ physicians and group practices across 40+ medical specialties nationwide. Our team of 200+ certified billers, coders, and RCM specialists bring deep specialty knowledge and a results-driven approach to every client engagement.</p>
+          <p>We work as an extension of your practice — transparent, accountable, and fully invested in your financial success. From solo practitioners to large multi-specialty groups, we deliver measurable results: higher collections, fewer denials, and reduced administrative burden.</p>
+          <div class="values-grid">
+            <div class="value-card"><h4>🎯 Our Mission</h4><p>To maximize revenue for healthcare providers through accurate, compliant, and efficient billing solutions.</p></div>
+            <div class="value-card"><h4>👁 Our Vision</h4><p>A healthcare ecosystem where providers focus on patients while technology and expertise handle the rest.</p></div>
+            <div class="value-card"><h4>🤝 Integrity</h4><p>Transparent billing practices, honest reporting, and no hidden fees — ever.</p></div>
+            <div class="value-card"><h4>🚀 Innovation</h4><p>Continuously adopting the latest billing technology and AI tools to improve outcomes.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Why Choose MedBillPro</span>
+        <h2>What Sets Us Apart</h2>
+        <p>We're not just a billing vendor — we're a strategic partner committed to the financial health of your practice.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card"><h4>🎓 Certified Expertise</h4><p>200+ AAPC and AHIMA certified coders with specialty-specific training and ongoing education.</p></div>
+        <div class="why-card"><h4>⚡ Fast Turnaround</h4><p>Claims submitted within 24 hours of encounter — getting you paid faster than industry averages.</p></div>
+        <div class="why-card"><h4>🔒 Full HIPAA Compliance</h4><p>ISO 27001 certified security infrastructure protecting all PHI with regular audits and staff training.</p></div>
+        <div class="why-card"><h4>📊 Transparent Reporting</h4><p>Real-time dashboards and daily, weekly, monthly reports — full visibility into your revenue cycle.</p></div>
+        <div class="why-card"><h4>🛠 EHR Agnostic</h4><p>We work with 30+ EHR platforms including Epic, eCW, AdvancedMD, Athena, NextGen, and more.</p></div>
+        <div class="why-card"><h4>💬 24/7 Support</h4><p>Dedicated account managers and support staff available around the clock for your team.</p></div>
+        <div class="why-card"><h4>📉 No Long-Term Lock-in</h4><p>Flexible month-to-month agreements — we earn your business every month through results.</p></div>
+        <div class="why-card"><h4>💰 Flexible Pricing</h4><p>Percentage-of-collections model means our success is directly tied to yours. No hidden fees.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Our Leadership</span>
+        <h2>Meet the Team Behind Your Revenue</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-avatar">AM</div><h4>Ahmed Malik</h4><span>Chief Executive Officer</span></div>
+        <div class="team-card"><div class="team-avatar">SR</div><h4>Sarah Rodriguez</h4><span>VP of Operations</span></div>
+        <div class="team-card"><div class="team-avatar">JP</div><h4>James Parker</h4><span>Director of Coding</span></div>
+        <div class="team-card"><div class="team-avatar">NK</div><h4>Nadia Khan</h4><span>Head of Client Success</span></div>
+        <div class="team-card"><div class="team-avatar">DT</div><h4>David Torres</h4><span>RCM Technology Lead</span></div>
+        <div class="team-card"><div class="team-avatar">LW</div><h4>Linda Wang</h4><span>Compliance Officer</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="container">
+      <h2>Let's Grow Your Practice Revenue Together</h2>
+      <p>Schedule a no-obligation consultation with our billing experts and discover what MedBillPro can do for your practice.</p>
+      <button class="btn btn-primary" onclick="showPage('contact')">Book Free Consultation →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PRICING PAGE ═══════════════════ -->
+<div id="page-pricing" class="page">
+  <div class="pricing-hero">
+    <div class="container">
+      <h1>Simple, Transparent Pricing</h1>
+      <p>No setup fees. No long-term contracts. Our pricing is tied directly to your collections — we succeed when you do.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Pricing Plans</span>
+        <h2>Choose the Plan That Fits Your Practice</h2>
+        <p>All plans include HIPAA compliance, dedicated support, and real-time reporting. Billed as a percentage of monthly collections.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Starter</h3>
+          <p style="color:var(--gray);font-size:.85rem">Solo practitioners & small practices</p>
+          <div class="price">4–5%<span> /collections</span></div>
+          <div class="price-note">Up to $100K/month collections</div>
+          <ul>
+            <li>Medical billing & coding</li>
+            <li>Claim submission & tracking</li>
+            <li>Payment posting</li>
+            <li>Monthly reporting</li>
+            <li>Email support</li>
+            <li>1 provider included</li>
+          </ul>
+          <button class="btn btn-blue" onclick="showPage('contact')">Get Started</button>
+        </div>
+        <div class="pricing-card popular">
+          <div class="popular-badge">Most Popular</div>
+          <h3>Professional</h3>
+          <p style="color:var(--gray);font-size:.85rem">Growing practices & group practices</p>
+          <div class="price">3–4%<span> /collections</span></div>
+          <div class="price-note">$100K–$500K/month collections</div>
+          <ul>
+            <li>Everything in Starter</li>
+            <li>Full RCM management</li>
+            <li>A/R follow-up & denials</li>
+            <li>Eligibility verification</li>
+            <li>Dedicated account manager</li>
+            <li>Weekly + monthly reports</li>
+            <li>Up to 5 providers</li>
+            <li>24/7 phone & email support</li>
+          </ul>
+          <button class="btn btn-primary" onclick="showPage('contact')">Get Started</button>
+        </div>
+        <div class="pricing-card">
+          <h3>Enterprise</h3>
+          <p style="color:var(--gray);font-size:.85rem">Large groups & health systems</p>
+          <div class="price">Custom</div>
+          <div class="price-note">$500K+/month collections</div>
+          <ul>
+            <li>Everything in Professional</li>
+            <li>Custom RCM workflows</li>
+            <li>Credentialing services</li>
+            <li>Billing audit included</li>
+            <li>API & EHR integrations</li>
+            <li>Unlimited providers</li>
+            <li>Daily reporting dashboard</li>
+            <li>Dedicated billing team</li>
+          </ul>
+          <button class="btn btn-blue" onclick="showPage('contact')">Contact Sales</button>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem;padding:2rem;background:var(--blue-light);border-radius:12px">
+        <h3 style="font-family:Poppins,sans-serif;margin-bottom:.5rem">All Plans Include</h3>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:1rem">
+          <span style="font-size:.85rem;color:var(--gray)">✔ No Setup Fees</span>
+          <span style="font-size:.85rem;color:var(--gray)">✔ No Long-Term Contracts</span>
+          <span style="font-size:.85rem;color:var(--gray)">✔ HIPAA Compliance</span>
+          <span style="font-size:.85rem;color:var(--gray)">✔ Free Billing Audit</span>
+          <span style="font-size:.85rem;color:var(--gray)">✔ Onboarding Support</span>
+          <span style="font-size:.85rem;color:var(--gray)">✔ Certified Coders</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════ CONTACT PAGE ═══════════════════ -->
+<div id="page-contact" class="page">
+  <div class="contact-hero">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p>Talk to a billing expert today. Get a free consultation and billing audit — no obligation, no commitment.</p>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="contact-info-card" style="margin-bottom:1.5rem">
+            <h3>Get In Touch</h3>
+            <div class="cinfo-item"><div class="cinfo-icon">📞</div><div class="cinfo-text"><strong>Phone</strong><span>+1 (800) 123-4567</span></div></div>
+            <div class="cinfo-item"><div class="cinfo-icon">📧</div><div class="cinfo-text"><strong>Email</strong><span>info@medbillpro.com</span></div></div>
+            <div class="cinfo-item"><div class="cinfo-icon">📍</div><div class="cinfo-text"><strong>Headquarters</strong><span>123 Healthcare Drive, Dallas, TX 75201</span></div></div>
+            <div class="cinfo-item"><div class="cinfo-icon">🕐</div><div class="cinfo-text"><strong>Business Hours</strong><span>Mon–Fri: 8:00 AM – 7:00 PM EST<br>Sat: 9:00 AM – 2:00 PM EST</span></div></div>
+          </div>
+          <div class="contact-info-card">
+            <h3>Why Contact Us?</h3>
+            <ul style="margin-top:.5rem">
+              <li style="padding:.5rem 0;border-bottom:1px solid var(--gray-border);font-size:.87rem;color:var(--gray);display:flex;gap:.6rem">✅ Free billing audit of your current process</li>
+              <li style="padding:.5rem 0;border-bottom:1px solid var(--gray-border);font-size:.87rem;color:var(--gray);display:flex;gap:.6rem">✅ No-pressure consultation with an RCM expert</li>
+              <li style="padding:.5rem 0;border-bottom:1px solid var(--gray-border);font-size:.87rem;color:var(--gray);display:flex;gap:.6rem">✅ Custom pricing based on your practice size</li>
+              <li style="padding:.5rem 0;border-bottom:1px solid var(--gray-border);font-size:.87rem;color:var(--gray);display:flex;gap:.6rem">✅ Seamless onboarding with zero disruption</li>
+              <li style="padding:.5rem 0;font-size:.87rem;color:var(--gray);display:flex;gap:.6rem">✅ See results within the first 30 days</li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-card">
+          <h3>Request a Free Consultation</h3>
+          <p>Fill out the form below and one of our billing specialists will reach out within 24 hours.</p>
+          <div class="form-row">
+            <div class="form-group"><label>First Name *</label><input type="text" placeholder="John"/></div>
+            <div class="form-group"><label>Last Name *</label><input type="text" placeholder="Smith"/></div>
+          </div>
+          <div class="form-group"><label>Email Address *</label><input type="email" placeholder="john@practice.com"/></div>
+          <div class="form-row">
+            <div class="form-group"><label>Phone Number *</label><input type="tel" placeholder="+1 (555) 000-0000"/></div>
+            <div class="form-group"><label>Practice Name</label><input type="text" placeholder="Your Practice Name"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Specialty</label>
+              <select>
+                <option value="">Select Specialty</option>
+                <option>Cardiology</option><option>Orthopedics</option><option>Primary Care</option>
+                <option>OB/GYN</option><option>Neurology</option><option>Oncology</option>
+                <option>Pediatrics</option><option>Pain Management</option><option>Radiology</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Number of Providers</label>
+              <select>
+                <option>1</option><option>2–5</option><option>6–10</option><option>11–20</option><option>20+</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label>Current Billing Challenge</label><textarea placeholder="Tell us about your biggest billing challenge or what you'd like to improve..."></textarea></div>
+          <button class="form-submit" onclick="submitForm()">Submit — Get Free Consultation →</button>
+          <p class="form-note">🔒 Your information is secure. We are 100% HIPAA-compliant and never share your data.</p>
+          <div class="success-msg" id="successMsg">✅ Thank you! A billing specialist will contact you within 24 hours.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo">MedBill<span style="color:var(--teal)">Pro</span></a>
+        <p>A leading medical billing and revenue cycle management company serving 500+ healthcare providers across 40+ specialties nationwide.</p>
+        <div class="footer-badges">
+          <span class="fbadge">HIPAA Compliant</span>
+          <span class="fbadge">ISO 27001</span>
+          <span class="fbadge">AAPC Certified</span>
+          <span class="fbadge">AHIMA Member</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('services')">Medical Billing & Coding</a></li>
+          <li><a href="#" onclick="showPage('services')">Revenue Cycle Management</a></li>
+          <li><a href="#" onclick="showPage('services')">Credentialing Services</a></li>
+          <li><a href="#" onclick="showPage('services')">Eligibility Verification</a></li>
+          <li><a href="#" onclick="showPage('services')">A/R Management</a></li>
+          <li><a href="#" onclick="showPage('services')">Billing Audit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Specialties</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('specialties')">Cardiology</a></li>
+          <li><a href="#" onclick="showPage('specialties')">Orthopedics</a></li>
+          <li><a href="#" onclick="showPage('specialties')">Primary Care</a></li>
+          <li><a href="#" onclick="showPage('specialties')">OB/GYN</a></li>
+          <li><a href="#" onclick="showPage('specialties')">Neurology</a></li>
+          <li><a href="#" onclick="showPage('specialties')">View All →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('about')">About Us</a></li>
+          <li><a href="#" onclick="showPage('pricing')">Pricing</a></li>
+          <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Testimonials</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MedBillPro. All Rights Reserved.</span>
+      <span>
+        <a href="#">Privacy Policy</a> &nbsp;|&nbsp;
+        <a href="#">Terms of Service</a> &nbsp;|&nbsp;
+        <a href="#">HIPAA Policy</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  var el=document.getElementById('page-'+id);
+  if(el){el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+}
+function toggleMenu(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+function submitForm(){
+  document.getElementById('successMsg').style.display='block';
+  setTimeout(()=>document.getElementById('successMsg').style.display='none',5000);
+}
+// close mobile menu on nav click
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open'));
+});
+</script>
+</body>
+</html>
